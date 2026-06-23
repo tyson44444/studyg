@@ -1,17 +1,24 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { CareerProfiler } from "@/components/dashboard/CareerProfiler";
 import { ReportDisplay } from "@/components/dashboard/ReportDisplay";
 import { Button } from "@/components/ui/button";
-import { Sparkles, ArrowLeft } from "lucide-react";
+import { Sparkles, ArrowLeft, ShieldAlert } from "lucide-react";
 import { GenerateCareerReportOutput } from "@/ai/flows/generate-career-report";
 import { saveReportLocal } from "@/lib/storage";
+import Link from "next/link";
 
 export default function DashboardPage() {
   const [report, setReport] = useState<GenerateCareerReportOutput | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("studygie_demo_user");
+    setIsAuthenticated(!!stored);
+  }, []);
 
   const handleReportGenerated = (fullReport: any) => {
     setReport(fullReport);
@@ -22,6 +29,30 @@ export default function DashboardPage() {
       output: fullReport
     });
   };
+
+  if (isAuthenticated === false) {
+    return (
+      <div className="min-h-screen flex items-center justify-center px-6">
+        <Navbar />
+        <div className="max-w-md text-center space-y-6 glass p-8 rounded-3xl border-primary/20">
+          <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto">
+            <ShieldAlert className="w-8 h-8 text-primary" />
+          </div>
+          <div className="space-y-2">
+            <h2 className="text-2xl font-headline font-bold">Access Restricted</h2>
+            <p className="text-muted-foreground">Please sign in to your demo account to use the AI Career Counselor.</p>
+          </div>
+          <Link href="/login">
+            <Button className="w-full bg-primary hover:bg-primary/80">
+              Sign In to Demo
+            </Button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  if (isAuthenticated === null) return null;
 
   return (
     <div className="min-h-screen pb-20">
@@ -40,7 +71,7 @@ export default function DashboardPage() {
                   Design Your <span className="text-primary">Future</span> Career.
                 </h1>
                 <p className="text-lg text-muted-foreground max-w-lg">
-                  StudyGie AI analyzes your profile to architect your professional peak. No account required.
+                  StudyGie AI analyzes your profile to architect your professional peak. Using local demo storage.
                 </p>
               </div>
 
