@@ -7,15 +7,18 @@ import { PlaceHolderImages } from "@/lib/placeholder-images";
 import Image from "next/image";
 
 export default function LandingPage() {
+  const heroImage = PlaceHolderImages.find(img => img.id === 'hero-bg')?.imageUrl || "https://picsum.photos/seed/hero/1920/1080";
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden px-6">
         <div className="absolute inset-0 z-0">
           <Image
-            src={PlaceHolderImages.find(img => img.id === 'hero-bg')?.imageUrl || ""}
+            src={heroImage}
             alt="Futuristic background"
             fill
+            priority
             className="object-cover opacity-20"
             data-ai-hint="futuristic technology background"
           />

@@ -1,4 +1,3 @@
-
 'use server';
 /**
  * @fileOverview This flow converts a given career report text into an audible WAV audio format using Text-to-Speech (TTS).
@@ -11,7 +10,6 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 import { googleAI } from '@genkit-ai/google-genai';
-import * as wav from 'wav';
 import { Buffer } from 'buffer';
 
 const ReadCareerReportAloudInputSchema = z.string().describe('The career report text to be read aloud.');
@@ -31,9 +29,11 @@ async function toWav(
   rate = 24000,
   sampleWidth = 2
 ): Promise<string> {
+  // Dynamic import for 'wav' to handle resolution issues in some environments
+  const wav = await import('wav');
+  
   return new Promise((resolve, reject) => {
-    // @ts-ignore - 'wav' package is often problematic with types in ESM
-    const writer = new wav.Writer({
+    const writer = new wav.default.Writer({
       channels,
       sampleRate: rate,
       bitDepth: sampleWidth * 8,
