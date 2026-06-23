@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview This flow converts a given career report text into an audible WAV audio format using Text-to-Speech (TTS).
@@ -10,7 +11,7 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 import { googleAI } from '@genkit-ai/google-genai';
-import wav from 'wav';
+import * as wav from 'wav';
 import { Buffer } from 'buffer';
 
 const ReadCareerReportAloudInputSchema = z.string().describe('The career report text to be read aloud.');
@@ -31,6 +32,7 @@ async function toWav(
   sampleWidth = 2
 ): Promise<string> {
   return new Promise((resolve, reject) => {
+    // @ts-ignore - 'wav' package is often problematic with types in ESM
     const writer = new wav.Writer({
       channels,
       sampleRate: rate,
@@ -39,7 +41,7 @@ async function toWav(
 
     let bufs = [] as any[];
     writer.on('error', reject);
-    writer.on('data', function (d) {
+    writer.on('data', function (d: any) {
       bufs.push(d);
     });
     writer.on('end', function () {
@@ -68,7 +70,7 @@ const readCareerReportAloudFlow = ai.defineFlow(
         responseModalities: ['AUDIO'],
         speechConfig: {
           voiceConfig: {
-            prebuiltVoiceConfig: { voiceName: 'Algenib' }, // Using 'Algenib' as an example voice
+            prebuiltVoiceConfig: { voiceName: 'Algenib' },
           },
         },
       },
@@ -79,7 +81,6 @@ const readCareerReportAloudFlow = ai.defineFlow(
       throw new Error('No audio media returned from TTS model.');
     }
 
-    // The TTS model returns PCM audio, convert it to WAV
     const audioBuffer = Buffer.from(
       media.url.substring(media.url.indexOf(',') + 1),
       'base64'
