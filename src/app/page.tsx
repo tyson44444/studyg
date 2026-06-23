@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -98,7 +99,7 @@ export default function LandingPage() {
             {
               icon: <Briefcase className="w-8 h-8 text-blue-500" />,
               title: "Vault Storage",
-              desc: "Securely save and track your career evolution over time with our encrypted database vault."
+              desc: "Securely save and track your career evolution over time with our local database vault."
             }
           ].map((f, i) => (
             <div key={i} className="glass p-8 rounded-3xl border-white/5 hover:border-primary/20 transition-all hover:-translate-y-2 group">

@@ -26,17 +26,10 @@
       }
     }
   },
-  "auth": {
-    "providers": ["google.com"]
-  },
   "firestore": {
-    "/users/{userId}": {
-      "schema": "UserProfile",
-      "description": "User profile settings."
-    },
-    "/users/{userId}/reports/{reportId}": {
+    "/reports/{reportId}": {
       "schema": "CareerReport",
-      "description": "User's generated career reports."
+      "description": "Publicly accessible career reports (for anonymous use)."
     }
   }
 }
