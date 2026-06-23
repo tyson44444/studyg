@@ -1,0 +1,42 @@
+
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Stores the student's profile information.",
+      "type": "object",
+      "properties": {
+        "fullName": { "type": "string" },
+        "email": { "type": "string" },
+        "educationBackground": { "type": "string" },
+        "skills": { "type": "array", "items": { "type": "string" } },
+        "interests": { "type": "array", "items": { "type": "string" } },
+        "careerGoal": { "type": "string" }
+      }
+    },
+    "CareerReport": {
+      "title": "Career Report",
+      "description": "Stores generated AI career analysis reports.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "timestamp": { "type": "number" },
+        "input": { "$ref": "#/entities/UserProfile" },
+        "output": { "type": "object" }
+      }
+    }
+  },
+  "auth": {
+    "providers": ["google.com"]
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile settings."
+    },
+    "/users/{userId}/reports/{reportId}": {
+      "schema": "CareerReport",
+      "description": "User's generated career reports."
+    }
+  }
+}

@@ -2,26 +2,49 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Navbar } from "@/components/layout/Navbar";
 import { CareerProfiler } from "@/components/dashboard/CareerProfiler";
 import { ReportDisplay } from "@/components/dashboard/ReportDisplay";
 import { Button } from "@/components/ui/button";
-import { Sparkles, ArrowLeft } from "lucide-react";
+import { Sparkles, ArrowLeft, Loader2 } from "lucide-react";
 import { GenerateCareerReportOutput } from "@/ai/flows/generate-career-report";
-import { saveReport } from "@/lib/storage";
+import { saveReportFirestore } from "@/lib/storage";
+import { useUser, useFirestore } from "@/firebase";
 
 export default function DashboardPage() {
+  const { user, loading } = useUser();
+  const db = useFirestore();
+  const router = useRouter();
   const [report, setReport] = useState<GenerateCareerReportOutput | null>(null);
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push("/login");
+    }
+  }, [user, loading, router]);
 
   const handleReportGenerated = (fullReport: any) => {
     setReport(fullReport);
-    saveReport({
-      id: Math.random().toString(36).substr(2, 9),
-      timestamp: Date.now(),
-      input: fullReport.input,
-      output: fullReport
-    });
+    if (user) {
+      saveReportFirestore(db, user.uid, {
+        id: Math.random().toString(36).substr(2, 9),
+        timestamp: Date.now(),
+        input: fullReport.input,
+        output: fullReport
+      });
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="w-12 h-12 text-primary animate-spin" />
+      </div>
+    );
+  }
+
+  if (!user) return null;
 
   return (
     <div className="min-h-screen pb-20">
@@ -40,7 +63,7 @@ export default function DashboardPage() {
                   Design Your <span className="text-primary">Future</span> Career.
                 </h1>
                 <p className="text-lg text-muted-foreground max-w-lg">
-                  StudyGie AI analyzes your unique skills and interests to provide a data-driven path to professional excellence.
+                  Welcome back, {user.displayName?.split(' ')[0] || 'Explorer'}. StudyGie AI analyzes your profile to architect your professional peak.
                 </p>
               </div>
 
