@@ -5,12 +5,15 @@ import { ArrowRight, Sparkles, Shield, Rocket, Target, Star, Briefcase } from "l
 import { Button } from "@/components/ui/button";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import Image from "next/image";
+import { Navbar } from "@/components/layout/Navbar";
 
 export default function LandingPage() {
   const heroImage = PlaceHolderImages.find(img => img.id === 'hero-bg')?.imageUrl || "https://picsum.photos/seed/hero/1920/1080";
 
   return (
     <div className="min-h-screen">
+      <Navbar />
+      
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden px-6">
         <div className="absolute inset-0 z-0">

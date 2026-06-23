@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -15,8 +14,10 @@ interface Particle {
 
 export function ParticleBackground() {
   const [particles, setParticles] = useState<Particle[]>([]);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    setIsMounted(true);
     const newParticles = [...Array(20)].map((_, i) => ({
       id: i,
       width: Math.random() * 4 + 'px',
@@ -28,6 +29,8 @@ export function ParticleBackground() {
     }));
     setParticles(newParticles);
   }, []);
+
+  if (!isMounted) return <div className="particle-bg" />;
 
   return (
     <div className="particle-bg">
