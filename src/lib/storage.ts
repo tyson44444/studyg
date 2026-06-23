@@ -1,6 +1,5 @@
 
 import { GenerateCareerReportOutput } from "@/ai/flows/generate-career-report";
-import { doc, setDoc, Firestore, collection } from "firebase/firestore";
 
 export interface SavedReport {
   id: string;
@@ -15,15 +14,6 @@ export interface SavedReport {
   output: GenerateCareerReportOutput;
 }
 
-// Keeping local functions for backward compatibility if needed, 
-// but preferring Firestore for the new logged-in experience.
-
-export async function saveReportFirestore(db: Firestore, userId: string, report: SavedReport) {
-  const reportRef = doc(collection(db, 'users', userId, 'reports'), report.id);
-  await setDoc(reportRef, report);
-}
-
-// Local storage fallback (legacy)
 const STORAGE_KEY = 'studygie_reports';
 
 export function saveReportLocal(report: SavedReport) {

@@ -1,48 +1,28 @@
 
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Trash2, ExternalLink, Calendar, Briefcase, ChevronRight, Loader2 } from "lucide-react";
+import { Trash2, ExternalLink, Calendar, Briefcase, ChevronRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { format } from "date-fns";
-import { useUser, useFirestore, useCollection } from "@/firebase";
-import { collection, query, orderBy, doc, deleteDoc } from "firebase/firestore";
+import { getReportsLocal, SavedReport } from "@/lib/storage";
 
 export default function HistoryPage() {
-  const { user, loading: authLoading } = useUser();
-  const db = useFirestore();
-  const router = useRouter();
+  const [reports, setReports] = useState<SavedReport[]>([]);
 
   useEffect(() => {
-    if (!authLoading && !user) {
-      router.push("/login");
-    }
-  }, [user, authLoading, router]);
+    setReports(getReportsLocal());
+  }, []);
 
-  const reportsRef = user ? collection(db, 'users', user.uid, 'reports') : null;
-  const reportsQuery = reportsRef ? query(reportsRef, orderBy('timestamp', 'desc')) : null;
-  const { data: reports, loading: dataLoading } = useCollection(reportsQuery);
-
-  const handleDelete = async (reportId: string) => {
-    if (!user) return;
-    const reportRef = doc(db, 'users', user.uid, 'reports', reportId);
-    await deleteDoc(reportRef);
+  const handleDelete = (reportId: string) => {
+    const updated = reports.filter(r => r.id !== reportId);
+    setReports(updated);
+    localStorage.setItem('studygie_reports', JSON.stringify(updated));
   };
-
-  if (authLoading || dataLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="w-12 h-12 text-primary animate-spin" />
-      </div>
-    );
-  }
-
-  if (!user) return null;
 
   return (
     <div className="min-h-screen pb-20">
@@ -52,14 +32,14 @@ export default function HistoryPage() {
         <div className="flex justify-between items-end mb-12">
           <div>
             <h1 className="text-4xl font-headline font-bold mb-2">Report Vault</h1>
-            <p className="text-muted-foreground">Access your cloud-synced career pathways.</p>
+            <p className="text-muted-foreground">Access your locally saved career pathways.</p>
           </div>
           <Badge variant="outline" className="text-primary border-primary px-4 py-1">
-            {reports?.length || 0} Reports Saved
+            {reports.length} Reports Saved
           </Badge>
         </div>
 
-        {(!reports || reports.length === 0) ? (
+        {reports.length === 0 ? (
           <div className="glass p-12 rounded-3xl text-center space-y-6">
             <div className="bg-primary/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto">
               <Briefcase className="w-10 h-10 text-primary" />
@@ -74,7 +54,7 @@ export default function HistoryPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {reports.map((item: any) => (
+            {reports.map((item) => (
               <Card key={item.id} className="glass border-white/10 hover:border-primary/50 transition-all group overflow-hidden">
                 <div className="h-2 bg-gradient-to-r from-primary to-secondary" />
                 <CardHeader>
