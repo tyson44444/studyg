@@ -1,0 +1,17 @@
+
+{
+  "placeholderImages": [
+    {
+      "id": "hero-bg",
+      "description": "Abstract futuristic digital connection",
+      "imageUrl": "https://picsum.photos/seed/studygie1/1920/1080",
+      "imageHint": "futuristic technology"
+    },
+    {
+      "id": "career-ai",
+      "description": "AI Robot helping a human",
+      "imageUrl": "https://picsum.photos/seed/studygie2/800/600",
+      "imageHint": "artificial intelligence"
+    }
+  ]
+}
