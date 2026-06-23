@@ -10,7 +10,7 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 import { googleAI } from '@genkit-ai/google-genai';
-import * as wav from 'wav';
+import wav from 'wav';
 import { Buffer } from 'buffer';
 
 const ReadCareerReportAloudInputSchema = z.string().describe('The career report text to be read aloud.');
