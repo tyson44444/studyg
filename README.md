@@ -2,6 +2,8 @@
 
 StudyGie AI is an advanced, AI-powered career discovery and roadmap tool designed to help students architect their professional future. Using Gemini 1.5 and 2.5 models via Genkit, it analyzes user profiles to generate high-fit career suggestions, identifies skill gaps, and provides a structured 6-month learning roadmap.
 
+Demo Video Link:https://youtu.be/yt_9WTaxgjM
+
 ## 🚀 Features
 
 - **AI Career Profiler**: Analyzes your education, skills, and interests to suggest ideal career paths.
