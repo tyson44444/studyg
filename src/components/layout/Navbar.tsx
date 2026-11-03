@@ -49,7 +49,7 @@ export function Navbar() {
           </Link>
           <Link href="/history" className={`text-sm font-medium transition-colors flex items-center gap-2 ${pathname === '/history' ? 'text-primary' : 'hover:text-primary'}`}>
             <History className="w-4 h-4" />
-            <span className="hidden sm:inline">History</span>
+            <span className="hidden sm:inline">Vault</span>
           </Link>
 
           {demoUser ? (

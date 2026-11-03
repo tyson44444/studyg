@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { Volume2, VolumeX, Download, Share2, Award, Zap, Briefcase, TrendingUp, Copy, Check } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { Volume2, VolumeX, Download, Share2, Award, Zap, Briefcase, TrendingUp, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -18,8 +18,18 @@ interface ReportDisplayProps {
 export function ReportDisplay({ report }: ReportDisplayProps) {
   const { toast } = useToast();
   const [isPlaying, setIsPlaying] = useState(false);
-  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [isCopied, setIsCopied] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Cleanup audio on unmount
+  useEffect(() => {
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, []);
 
   const generateReportText = () => {
     let text = `AI CAREER GUIDANCE ANALYSIS REPORT\n`;
@@ -56,8 +66,8 @@ export function ReportDisplay({ report }: ReportDisplayProps) {
   };
 
   const handleSpeak = async () => {
-    if (isPlaying && audio) {
-      audio.pause();
+    if (isPlaying && audioRef.current) {
+      audioRef.current.pause();
       setIsPlaying(false);
       return;
     }
@@ -66,10 +76,30 @@ export function ReportDisplay({ report }: ReportDisplayProps) {
       setIsPlaying(true);
       const textToRead = `Your top career match is ${report.careerSuggestions[0]}. Your match percentage is ${report.careerMatchPercentage}%. Your recommended job roles include ${report.topJobRoles.join(', ')}.`;
       const { media } = await readCareerReportAloud(textToRead);
+      
       const newAudio = new Audio(media);
-      setAudio(newAudio);
-      newAudio.play();
-      newAudio.onended = () => setIsPlaying(false);
+      audioRef.current = newAudio;
+      
+      const playPromise = newAudio.play();
+      
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            // Playback started successfully
+          })
+          .catch(error => {
+            // Auto-play was prevented or interrupted
+            if (error.name !== "AbortError") {
+              console.error("Playback error:", error);
+              setIsPlaying(false);
+            }
+          });
+      }
+
+      newAudio.onended = () => {
+        setIsPlaying(false);
+        audioRef.current = null;
+      };
     } catch (error) {
       toast({ variant: "destructive", title: "Audio playback failed" });
       setIsPlaying(false);
@@ -82,12 +112,12 @@ export function ReportDisplay({ report }: ReportDisplayProps) {
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = "Career_Guidance_Report.txt";
+    link.download = "AI_Career_Guidance_Report.txt";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
-    toast({ title: "Report downloaded", description: "Your career roadmap is saved as a text document." });
+    toast({ title: "Report downloaded", description: "Your career roadmap is saved as a professional text document." });
   };
 
   const handleShare = async () => {
@@ -101,7 +131,6 @@ export function ReportDisplay({ report }: ReportDisplayProps) {
         });
         toast({ title: "Shared successfully" });
       } catch (err) {
-        // Fallback to clipboard if share was cancelled or failed
         copyToClipboard(text);
       }
     } else {
