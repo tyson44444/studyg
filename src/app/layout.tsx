@@ -1,4 +1,3 @@
-
 import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
@@ -6,7 +5,7 @@ import { ParticleBackground } from "@/components/layout/ParticleBackground";
 import { FirebaseClientProvider } from "@/firebase/client-provider";
 
 export const metadata: Metadata = {
-  title: 'StudyGie AI | Career Advisor',
+  title: 'AI Career Guidance | Architect Your Future',
   description: 'AI-Powered Career Roadmap and Discovery Tool',
 };
 

@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect } from "react";
@@ -40,7 +39,7 @@ export function Navbar() {
           <div className="bg-primary/20 p-2 rounded-lg group-hover:bg-primary/30 transition-colors">
             <Sparkles className="w-6 h-6 text-primary" />
           </div>
-          <span className="font-headline font-bold text-xl tracking-tight">StudyGie <span className="text-primary">AI</span></span>
+          <span className="font-headline font-bold text-xl tracking-tight">AI Career <span className="text-primary">Guidance</span></span>
         </Link>
 
         <div className="flex items-center gap-6">

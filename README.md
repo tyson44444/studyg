@@ -1,6 +1,6 @@
-# StudyGie AI | Career Advisor
+# AI Career Guidance | Professional Navigator
 
-StudyGie AI is an advanced, AI-powered career discovery and roadmap tool designed to help students architect their professional future. Using Gemini 1.5 and 2.5 models via Genkit, it analyzes user profiles to generate high-fit career suggestions, identifies skill gaps, and provides a structured 6-month learning roadmap.
+AI Career Guidance is an advanced, AI-powered career discovery and roadmap tool designed to help students architect their professional future. Using Gemini 1.5 and 2.5 models via Genkit, it analyzes user profiles to generate high-fit career suggestions, identifies skill gaps, and provides a structured 6-month learning roadmap.
 
 ## 🚀 Features
 
@@ -24,14 +24,6 @@ StudyGie AI is an advanced, AI-powered career discovery and roadmap tool designe
 - **Icons**: [Lucide React](https://lucide.dev/)
 - **Persistence**: Local Storage (Demo Mode)
 - **Animations**: [Tailwind Animate](https://github.com/jamiebuilds/tailwind-animate) & Framer-like CSS glassmorphism
-
-## 📁 Project Structure
-
-- `src/app`: Next.js pages and layouts.
-- `src/ai`: Genkit flows for report generation, TTS, and transcription.
-- `src/components`: Reusable UI components (Dashboard, Report Display, etc.).
-- `src/lib`: Utility functions, storage logic, and placeholder data.
-- `src/firebase`: Firebase configuration and client providers.
 
 ## 🚦 Getting Started
 

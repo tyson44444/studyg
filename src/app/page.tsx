@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -118,9 +117,9 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex items-center gap-2">
             <Sparkles className="w-6 h-6 text-primary" />
-            <span className="font-headline font-bold text-xl">StudyGie AI</span>
+            <span className="font-headline font-bold text-xl">AI Career Guidance</span>
           </div>
-          <p className="text-muted-foreground text-sm">© 2026 StudyGie AI Career Advisor. Designed for the Vibe Coding Challenge.</p>
+          <p className="text-muted-foreground text-sm">© 2026 AI Career Guidance Advisor. Designed for the Vibe Coding Challenge.</p>
           <div className="flex gap-6">
             <Link href="#" className="text-muted-foreground hover:text-primary transition-colors">Twitter</Link>
             <Link href="#" className="text-muted-foreground hover:text-primary transition-colors">GitHub</Link>

@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect } from "react";
@@ -40,7 +39,7 @@ export default function DashboardPage() {
           </div>
           <div className="space-y-2">
             <h2 className="text-2xl font-headline font-bold">Access Restricted</h2>
-            <p className="text-muted-foreground">Please sign in to your demo account to use the AI Career Counselor.</p>
+            <p className="text-muted-foreground">Please sign in to your demo account to use the AI Career Guidance tool.</p>
           </div>
           <Link href="/login">
             <Button className="w-full bg-primary hover:bg-primary/80">
@@ -71,7 +70,7 @@ export default function DashboardPage() {
                   Design Your <span className="text-primary">Future</span> Career.
                 </h1>
                 <p className="text-lg text-muted-foreground max-w-lg">
-                  StudyGie AI analyzes your profile to architect your professional peak. Using local demo storage.
+                  AI Career Guidance analyzes your profile to architect your professional peak. Using local demo storage.
                 </p>
               </div>
 

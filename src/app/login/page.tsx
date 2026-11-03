@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -29,7 +28,7 @@ export default function LoginPage() {
       
       toast({
         title: "Demo Login Successful",
-        description: "Welcome to StudyGie AI!",
+        description: "Welcome to AI Career Guidance!",
       });
       
       router.push("/dashboard");
