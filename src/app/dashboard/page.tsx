@@ -13,8 +13,10 @@ import Link from "next/link";
 export default function DashboardPage() {
   const [report, setReport] = useState<GenerateCareerReportOutput | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    setIsMounted(true);
     const stored = localStorage.getItem("studygie_demo_user");
     setIsAuthenticated(!!stored);
   }, []);
@@ -22,18 +24,20 @@ export default function DashboardPage() {
   const handleReportGenerated = (fullReport: any) => {
     setReport(fullReport);
     saveReportLocal({
-      id: Math.random().toString(36).substr(2, 9),
+      id: Math.random().toString(36).substring(2, 11),
       timestamp: Date.now(),
       input: fullReport.input,
       output: fullReport
     });
   };
 
+  if (!isMounted) return null;
+
   if (isAuthenticated === false) {
     return (
       <div className="min-h-screen flex items-center justify-center px-6">
         <Navbar />
-        <div className="max-w-md text-center space-y-6 glass p-8 rounded-3xl border-primary/20">
+        <div className="max-w-md w-full text-center space-y-6 glass p-8 rounded-3xl border-primary/20 animate-in fade-in zoom-in duration-500">
           <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto">
             <ShieldAlert className="w-8 h-8 text-primary" />
           </div>
@@ -41,8 +45,8 @@ export default function DashboardPage() {
             <h2 className="text-2xl font-headline font-bold">Access Restricted</h2>
             <p className="text-muted-foreground">Please sign in to your demo account to use the AI Career Guidance tool.</p>
           </div>
-          <Link href="/login">
-            <Button className="w-full bg-primary hover:bg-primary/80">
+          <Link href="/login" className="block w-full">
+            <Button className="w-full bg-primary hover:bg-primary/80 py-6 text-lg rounded-xl">
               Sign In to Demo
             </Button>
           </Link>
@@ -50,8 +54,6 @@ export default function DashboardPage() {
       </div>
     );
   }
-
-  if (isAuthenticated === null) return null;
 
   return (
     <div className="min-h-screen pb-20">
@@ -70,7 +72,7 @@ export default function DashboardPage() {
                   Design Your <span className="text-primary">Future</span> Career.
                 </h1>
                 <p className="text-lg text-muted-foreground max-w-lg">
-                  AI Career Guidance analyzes your profile to architect your professional peak. Using local demo storage.
+                  AI Career Guidance analyzes your profile to architect your professional peak. Get personalized roadmap in seconds.
                 </p>
               </div>
 
@@ -79,10 +81,10 @@ export default function DashboardPage() {
                   { label: "AI Analysis", value: "Real-time" },
                   { label: "Accuracy", value: "98.5%" },
                   { label: "Job Roles", value: "5000+" },
-                  { label: "Resources", value: "Verified" }
+                  { label: "Status", value: "Ready" }
                 ].map((stat, i) => (
-                  <div key={i} className="glass p-4 rounded-xl">
-                    <div className="text-xs text-muted-foreground uppercase">{stat.label}</div>
+                  <div key={i} className="glass p-4 rounded-xl border-white/5 hover:border-primary/20 transition-all">
+                    <div className="text-xs text-muted-foreground uppercase font-bold tracking-tight">{stat.label}</div>
                     <div className="text-xl font-bold font-headline text-primary">{stat.value}</div>
                   </div>
                 ))}
@@ -94,10 +96,10 @@ export default function DashboardPage() {
             </div>
           </div>
         ) : (
-          <div className="space-y-6">
+          <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
             <Button
               variant="ghost"
-              className="text-muted-foreground hover:text-white mb-4"
+              className="text-muted-foreground hover:text-white mb-4 hover:bg-white/5 transition-colors"
               onClick={() => setReport(null)}
             >
               <ArrowLeft className="w-4 h-4 mr-2" />

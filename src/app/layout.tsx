@@ -6,7 +6,7 @@ import { FirebaseClientProvider } from "@/firebase/client-provider";
 
 export const metadata: Metadata = {
   title: 'AI Career Guidance | Architect Your Future',
-  description: 'AI-Powered Career Roadmap and Discovery Tool',
+  description: 'AI-Powered Career Roadmap and Discovery Tool. Discover your professional peak with Gemini AI.',
 };
 
 export default function RootLayout({
@@ -21,7 +21,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
       </head>
-      <body className="font-body antialiased min-h-screen">
+      <body className="font-body antialiased min-h-screen bg-background text-foreground">
         <FirebaseClientProvider>
           <ParticleBackground />
           {children}

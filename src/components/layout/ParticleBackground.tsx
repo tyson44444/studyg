@@ -18,22 +18,22 @@ export function ParticleBackground() {
 
   useEffect(() => {
     setIsMounted(true);
-    const newParticles = [...Array(20)].map((_, i) => ({
+    const newParticles = Array.from({ length: 20 }).map((_, i) => ({
       id: i,
-      width: Math.random() * 4 + 'px',
-      height: Math.random() * 4 + 'px',
-      left: Math.random() * 100 + '%',
-      top: Math.random() * 100 + '%',
-      duration: `${Math.random() * 10 + 10}s`,
-      opacity: Math.random() * 0.5
+      width: `${Math.random() * 4 + 1}px`,
+      height: `${Math.random() * 4 + 1}px`,
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      duration: `${Math.random() * 15 + 10}s`,
+      opacity: Math.random() * 0.4
     }));
     setParticles(newParticles);
   }, []);
 
-  if (!isMounted) return <div className="particle-bg" />;
+  if (!isMounted) return <div className="particle-bg pointer-events-none" aria-hidden="true" />;
 
   return (
-    <div className="particle-bg">
+    <div className="particle-bg pointer-events-none overflow-hidden" aria-hidden="true">
       {particles.map((p) => (
         <div
           key={p.id}
