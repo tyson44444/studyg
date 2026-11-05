@@ -8,6 +8,7 @@ import Image from "next/image";
 import { Navbar } from "@/components/layout/Navbar";
 
 export default function LandingPage() {
+  // Ensure we have a valid hero image source
   const heroImage = PlaceHolderImages.find(img => img.id === 'hero-bg')?.imageUrl || "https://picsum.photos/seed/studygie1/1920/1080";
 
   return (
@@ -48,7 +49,7 @@ export default function LandingPage() {
             </Link>
             <Link href="/history">
               <Button size="lg" variant="outline" className="glass px-10 py-8 text-xl rounded-2xl border-white/10 hover:bg-white/5">
-                View History
+                View Vault
               </Button>
             </Link>
           </div>
@@ -97,7 +98,7 @@ export default function LandingPage() {
             },
             {
               icon: <Briefcase className="w-8 h-8 text-blue-500" />,
-              title: "Vault Storage",
+              title: "Report Vault",
               desc: "Securely save and track your career evolution over time with our localized vault."
             }
           ].map((f, i) => (

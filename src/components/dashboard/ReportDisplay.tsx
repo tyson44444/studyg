@@ -66,6 +66,7 @@ export function ReportDisplay({ report }: ReportDisplayProps) {
   };
 
   const handleSpeak = async () => {
+    // If playing, pause and reset state
     if (isPlaying && audioRef.current) {
       audioRef.current.pause();
       setIsPlaying(false);
@@ -81,17 +82,21 @@ export function ReportDisplay({ report }: ReportDisplayProps) {
       audioRef.current = newAudio;
       
       setIsGeneratingAudio(false);
-      setIsPlaying(true);
       
       const playPromise = newAudio.play();
       
       if (playPromise !== undefined) {
-        playPromise.catch(error => {
-          if (error.name !== "AbortError") {
-            console.error("Playback error:", error);
-            setIsPlaying(false);
-          }
-        });
+        setIsPlaying(true);
+        playPromise
+          .then(() => {
+            // Playback started successfully
+          })
+          .catch(error => {
+            if (error.name !== "AbortError") {
+              console.error("Playback error:", error);
+              setIsPlaying(false);
+            }
+          });
       }
 
       newAudio.onended = () => {
@@ -99,7 +104,7 @@ export function ReportDisplay({ report }: ReportDisplayProps) {
         audioRef.current = null;
       };
     } catch (error) {
-      toast({ variant: "destructive", title: "Audio playback failed" });
+      toast({ variant: "destructive", title: "Audio playback failed", description: "AI voice engine encountered an error." });
       setIsGeneratingAudio(false);
       setIsPlaying(false);
     }

@@ -1,8 +1,6 @@
 # AI Career Guidance | Professional Navigator
 
-AI Career Guidance is an advanced, AI-powered career discovery and roadmap tool designed to help students architect their professional future. Using Gemini 1.5 and 2.5 models via Genkit, it analyzes user profiles to generate high-fit career suggestions, identifies skill gaps, and provides a structured 6-month learning roadmap.
-
-Demo Video Link:https://youtu.be/yt_9WTaxgjM
+AI Career Guidance is an advanced, AI-powered career discovery and roadmap tool designed to help students architect their professional future. Using Gemini models via Genkit, it analyzes user profiles to generate high-fit career suggestions, identifies skill gaps, and provides a structured 6-month learning roadmap.
 
 ## 🚀 Features
 
@@ -25,7 +23,6 @@ Demo Video Link:https://youtu.be/yt_9WTaxgjM
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/) & [Shadcn UI](https://ui.shadcn.com/)
 - **Icons**: [Lucide React](https://lucide.dev/)
 - **Persistence**: Local Storage (Demo Mode)
-- **Animations**: [Tailwind Animate](https://github.com/jamiebuilds/tailwind-animate) & Framer-like CSS glassmorphism
 
 ## 🚦 Getting Started
 
@@ -47,7 +44,7 @@ Demo Video Link:https://youtu.be/yt_9WTaxgjM
 ## 🧪 Demo Mode
 The application currently operates in **Demo Mode**. 
 - **Login**: You can sign in using any email and password on the `/login` page to access the Dashboard. 
-- **Storage**: All career reports and user sessions are stored in your browser's `localStorage`. No actual backend authentication is required for this demo.
+- **Storage**: All career reports and user sessions are stored in your browser's `localStorage`.
 
 ## 📄 License
 Designed for the Vibe Coding Challenge 2026.

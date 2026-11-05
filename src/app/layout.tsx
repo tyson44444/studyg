@@ -5,8 +5,8 @@ import { ParticleBackground } from "@/components/layout/ParticleBackground";
 import { FirebaseClientProvider } from "@/firebase/client-provider";
 
 export const metadata: Metadata = {
-  title: 'AI Career Guidance | Architect Your Future',
-  description: 'AI-Powered Career Roadmap and Discovery Tool. Discover your professional peak with Gemini AI.',
+  title: 'AI Career Guidance | Professional Navigator',
+  description: 'AI-Powered Career Roadmap and Discovery Tool. Architect your professional future with Gemini AI.',
 };
 
 export default function RootLayout({

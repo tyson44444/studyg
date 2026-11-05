@@ -29,11 +29,11 @@ async function toWav(
   rate = 24000,
   sampleWidth = 2
 ): Promise<string> {
-  // Use standard require for wav to handle commonjs resolution in turbopack
-  const wav = require('wav');
+  // Use dynamic import for wav to handle server-side resolution
+  const wav = (await import('wav')).default || require('wav');
   
   return new Promise((resolve, reject) => {
-    const writer = new wav.Writer({
+    const writer = new (wav.Writer || wav)({
       channels,
       sampleRate: rate,
       bitDepth: sampleWidth * 8,
